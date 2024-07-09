@@ -86,6 +86,11 @@ public class vistaTablero extends javax.swing.JFrame {
         jTextFieldFila.setBackground(new java.awt.Color(153, 0, 0));
         jTextFieldFila.setFont(new java.awt.Font("Stencil", 2, 14)); // NOI18N
         jTextFieldFila.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldFila.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldFilaActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 2, 18)); // NOI18N
         jLabel3.setText("Fila de Columna");
@@ -113,6 +118,11 @@ public class vistaTablero extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Segoe UI Emoji", 3, 24)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("RESETEAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Wide Latin", 1, 18)); // NOI18N
         jLabel4.setText("DE AJEDREZ");
@@ -213,6 +223,12 @@ public class vistaTablero extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        if(!validarNumeros(jTextFieldFila.getText().trim())){
+           JOptionPane.showMessageDialog(null, "Por favor, llene las casillas usando numeros");
+        }
+        if(!validarNumeros(jTextFieldColumna.getText().trim())){
+           JOptionPane.showMessageDialog(null, "Por favor, llene las casillas usando numeros");
+        }
          int fila = Integer.parseInt(jTextFieldFila.getText());
          int filaMatriz = fila-1;
         int columna = Integer.parseInt(jTextFieldColumna.getText());
@@ -275,6 +291,47 @@ switch (imagenSeleccionada){
         }
         jButtonMatrix[fila][columna].setBackground(Color.GREEN);
         break;
+            case "Peon Blanco":
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                
+                if((j==columna-1)&&((i==fila-2)||(i==fila-1))){
+                    jButtonMatrix[i][j].setBackground(Color.GREEN);
+                }
+            }
+        }
+        break;
+        case "Peon Negro":
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                if ((j==columnaMatriz)&&((i==filaMatriz+1)||(i==filaMatriz+1))){
+                    jButtonMatrix[i][j].setBackground(Color.GREEN);
+                }
+            }
+        }
+        break;
+        case "Reina Blanca":
+            for(int i=0; i<8;i++){
+                for(int j=0; j<8; j++){
+                    int suma= fila+columna-2;
+                    int resta = fila-columna;
+                    if((((i+j)==suma)||((i-j)==resta))||((i==fila-1)||(j==columna-1))){
+                        jButtonMatrix[i][j].setBackground(Color.GREEN);
+                    }
+                }
+            }
+            break;
+        case "Reina Negra":
+           for(int i=0; i<8;i++){
+                for(int j=0; j<8; j++){
+                    int suma= fila+columna-2;
+                    int resta = fila-columna;
+                    if((((i+j)==suma)||((i-j)==resta))||((i==fila-1)||(j==columna-1))){
+                        jButtonMatrix[i][j].setBackground(Color.GREEN);
+                    }
+                }
+            }
+            break; 
     case "Rey Blanco":
        for(int i=0;i<8;i++){
            for(int j=0;j<8;j++){
@@ -286,22 +343,70 @@ switch (imagenSeleccionada){
            }
        }
        break;
-    case "Peon Blanco":
+    case "Rey Negro":
         for(int i=0;i<8;i++){
+           for(int j=0;j<8;j++){
+               if((i==fila-2)&&((j==columna-2)||(j==columna-1)||(j==columna))||
+                       (i==fila)&&((j==columna-2)||(j==columna-1)||(j==columna))||
+                       (i==fila-1)&&((j==columna-2)||(j==columna-1)||(j==columna))){
+                   jButtonMatrix[i][j].setBackground(Color.GREEN);
+               }
+           }
+       }
+       break;
+    case "Torre Blanca":
+        for(int i=0; i<8; i++){
             for(int j=0;j<8;j++){
-                if((j==columna-1)&&((i==fila-2)||(i==fila-1))){
+                if((i==fila-1)||(j==columna-1)){
                     jButtonMatrix[i][j].setBackground(Color.GREEN);
                 }
             }
         }
         break;
+    case "Torre Negra":
+        for(int i=0; i<8; i++){
+            for(int j=0;j<8;j++){
+                if((i==fila-1)||(j==columna-1)){
+                    jButtonMatrix[i][j].setBackground(Color.GREEN);
+                }
+            }
+        }
+        break;
+        default:
+        JOptionPane.showMessageDialog(null, "Error, debe de ingresar una ficha", "Error",JOptionPane.ERROR_MESSAGE);
 }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+public static boolean validarNumeros(String datos){
+    return datos.matches("[0-9]");
+}
     
     private void jComboBoxImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxImagenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxImagenActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            jButtonMatrix[i][j].setIcon(null); // Eliminar la imagen actual
+            if ((i + j) % 2 == 0) {
+                jButtonMatrix[i][j].setBackground(Color.WHITE);
+            } else {
+                jButtonMatrix[i][j].setBackground(Color.BLACK);
+            }
+        }
+    }
+
+    // Resetear los campos de texto
+    jTextFieldFila.setText("");
+    jTextFieldColumna.setText("");
+    jComboBoxImagen.setSelectedIndex(0); // Seleccionar la opción "Seleccionar" por defecto
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextFieldFilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFilaActionPerformed
+        // TODO add your handling code here:
+         
+    }//GEN-LAST:event_jTextFieldFilaActionPerformed
 
     /**
      * @param args the command line arguments
