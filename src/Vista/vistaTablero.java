@@ -201,35 +201,35 @@ public void centraVentana(){ //clase creada con el objetivo de adecuar la ventan
         jButtonMatrix[filaMatriz][columnaMatriz].setIcon(new ImageIcon(getClass().getResource(rutaImagen))); //Asignación de la imagen en el sitio de la matriz que desee el usuario
 switch (imagenSeleccionada){ //Condicional para determinar los movimientos posibles de cada una de las fichas
     case "Alfil Blanco": //si selecciona Alfil Blanco dentro del Combo Box hacer:
-        Color casillaColor = jButtonMatrix[fila][columna].getBackground(); //varable para tomar el color de la casilla en donde se ubica la ficha
+        Color casillaColor = jButtonMatrix[fila-1][columna-1].getBackground(); //variable para tomar el color de la casilla en donde se ubica la ficha
         if(casillaColor==Color.WHITE){ //si el color de la casilla en la que se ubica la ficha es blanco...
-            for(int i=0;i<8;i++){
-                for(int j=0; j<8; j++){
-                    int suma = fila + columna -2;
-                    int resta=fila-columna;
-                    if(((i+j==suma)||(i-j==resta))&& i>=0 && i<8 && j>=0 && j<8){
-                        jButtonMatrix[i][j].setBackground(Color.GREEN);
+            for(int i=0;i<8;i++){ //iterador de las filas del ajedrez
+                for(int j=0; j<8; j++){ //iterador de las columnas del ajedrez
+                    int suma = fila + columna -2; //variable para designar suma que se usara en la condicional
+                    int resta=fila-columna; //variable para designar resta que se usara en la condicional
+                    if(((i+j==suma)||(i-j==resta))&& i>=0 && i<8 && j>=0 && j<8){ //contabilizacion de las diagonales en las que se puede mover el alfil
+                        jButtonMatrix[i][j].setBackground(Color.GREEN); //Colorear de verde
                     }
                 }
             }
-        }else{
-            JOptionPane.showMessageDialog(null, "Si usa el alfil blanco debe de seleccionar una casilla blanca");
+        }else{ //si no...
+            JOptionPane.showMessageDialog(null, "Si usa el alfil blanco debe de seleccionar una casilla blanca"); //mostrar error
         }
         break; //Terminar el caso del switch actual y continuar con el siguiente
     case "Alfil Negro": //Si se selecciona Alfil Negro en el Combo Box hacer
-        Color casillaColorX = jButtonMatrix[fila][columna].getBackground();
-        if(casillaColorX ==Color.BLACK){
-            for(int i=0;i<8;i++){
-                for(int j=0;j<8;j++){
-                    int suma= fila+columna-2;
-                    int resta=fila-columna;
-                    if(((i+j==suma)||(i-j==resta))&&i>=0&&i<8&&j>=0&&j<8){
-                        jButtonMatrix[i][j].setBackground(Color.GREEN);
+        Color casillaColorX = jButtonMatrix[fila-1][columna-1].getBackground(); //variable para tomar el color de la casilla en donde se ubica la ficha
+        if(casillaColorX ==Color.BLACK){ //si el color de la casilla en la que se ubica la ficha es negro...
+            for(int i=0;i<8;i++){ //iterador de las filas del ajedrez
+                for(int j=0;j<8;j++){//iterador de las columnas del ajedrez
+                    int suma= fila+columna-2;//variable para designar suma que se usara en la condicional
+                    int resta=fila-columna;//variable para designar resta que se usara en la condicional
+                    if(((i+j==suma)||(i-j==resta))&&i>=0&&i<8&&j>=0&&j<8){//contabilizacion de las diagonales en las que se puede mover el alfil
+                        jButtonMatrix[i][j].setBackground(Color.GREEN); //Colorear de verde
                     }
                 }
             }
-        }else{
-            JOptionPane.showMessageDialog(null, "Si usa el alfil negro debe de seleccionar una casilla negra");
+        }else{ // si no...
+            JOptionPane.showMessageDialog(null, "Si usa el alfil negro debe de seleccionar una casilla negra"); //mostrar error
         }
         break; //Terminar el caso del switch actual y continuar con el siguiente
     case "Caballo Blanco": //Si se selecciona Caballo Blanco en el Combo Box hacer
