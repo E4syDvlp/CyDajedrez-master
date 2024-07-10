@@ -189,7 +189,7 @@ public void centraVentana(){ //clase creada con el objetivo de adecuar la ventan
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 //Declaracion de lo que hará el botón "Iniciar" llamado "jButton1"  en el programa 
         if(jTextFieldFila.getText().isEmpty() || jTextFieldColumna.getText().isEmpty()){ //si una de las casillas para escribir la fila y columna de la ficha está vacia...
-            JOptionPane.showMessageDialog(this, "Debe de llenar todos los campos como se pide."); //mostrar un mensaje de error
+            JOptionPane.showMessageDialog(this, "Debe de llenar todos los campos como se pide."); //mostrar un mensaje de error en el sistema
         }else{ //si no...
          int fila = Integer.parseInt(jTextFieldFila.getText()); //variable para almacenar lo obtenido en la casilla de ingreso de Fila
          int filaMatriz = fila-1; //Contabilización de la fila de matriz del 1 al 8 
@@ -201,26 +201,36 @@ public void centraVentana(){ //clase creada con el objetivo de adecuar la ventan
         jButtonMatrix[filaMatriz][columnaMatriz].setIcon(new ImageIcon(getClass().getResource(rutaImagen))); //Asignación de la imagen en el sitio de la matriz que desee el usuario
 switch (imagenSeleccionada){ //Condicional para determinar los movimientos posibles de cada una de las fichas
     case "Alfil Blanco": //si selecciona Alfil Blanco dentro del Combo Box hacer:
-        for(int i=0;i<8;i++){ //iterar en las filas del ajedrez del 0 al 7
-            for(int j=0;j<8;j++){ //iterar en las columnas del ajedrez del 0 al 7
-                int suma=fila+columna-2; //calcular la diagonal principal del ajedrez, en la posicion elegida
-                int resta=fila-columna; //calcular la diagonal secundaria del ajedrez, en la posicion elegida
-                if(((i+j)==suma)||((i-j)==resta)){ //Verificar si la posicion actual se encuentra en la diagonal principal o secundaria del ajedrez
-                    jButtonMatrix[i][j].setBackground(Color.GREEN); //si se cumple la condición, las casillas de posibles movimientos se pintan de verde
+        Color casillaColor = jButtonMatrix[fila][columna].getBackground(); //varable para tomar el color de la casilla en donde se ubica la ficha
+        if(casillaColor==Color.WHITE){ //si el color de la casilla en la que se ubica la ficha es blanco...
+            for(int i=0;i<8;i++){
+                for(int j=0; j<8; j++){
+                    int suma = fila + columna -2;
+                    int resta=fila-columna;
+                    if(((i+j==suma)||(i-j==resta))&& i>=0 && i<8 && j>=0 && j<8){
+                        jButtonMatrix[i][j].setBackground(Color.GREEN);
+                    }
                 }
             }
-                }
+        }else{
+            JOptionPane.showMessageDialog(null, "Si usa el alfil blanco debe de seleccionar una casilla blanca");
+        }
         break; //Terminar el caso del switch actual y continuar con el siguiente
     case "Alfil Negro": //Si se selecciona Alfil Negro en el Combo Box hacer
-        for(int i=0;i<8;i++){ //iterar en las filas del ajedrez del 0 al 7
-            for(int j=0;j<8;j++){ //iterar en las columnas del ajedrez del 0 al 7
-                int suma=fila+columna-2; //calcular la diagonal principal del ajedrez, en la posicion elegida
-                int resta=fila-columna;//calcular la diagonal secundaria del ajedrez, en la posicion elegida
-                if(((i+j)==suma)||((i-j)==resta)){//Verificar si la posicion actual se encuentra en la diagonal principal o secundaria del ajedrez
-                    jButtonMatrix[i][j].setBackground(Color.GREEN);//si se cumple la condición, las casillas de posibles movimientos se pintan de verde
+        Color casillaColorX = jButtonMatrix[fila][columna].getBackground();
+        if(casillaColorX ==Color.BLACK){
+            for(int i=0;i<8;i++){
+                for(int j=0;j<8;j++){
+                    int suma= fila+columna-2;
+                    int resta=fila-columna;
+                    if(((i+j==suma)||(i-j==resta))&&i>=0&&i<8&&j>=0&&j<8){
+                        jButtonMatrix[i][j].setBackground(Color.GREEN);
+                    }
                 }
             }
-                }
+        }else{
+            JOptionPane.showMessageDialog(null, "Si usa el alfil negro debe de seleccionar una casilla negra");
+        }
         break; //Terminar el caso del switch actual y continuar con el siguiente
     case "Caballo Blanco": //Si se selecciona Caballo Blanco en el Combo Box hacer
         fila-=1; //Ajuste de posicion de fila actual restandole 1
@@ -255,20 +265,28 @@ switch (imagenSeleccionada){ //Condicional para determinar los movimientos posib
         jButtonMatrix[fila][columna].setBackground(Color.GREEN); //si se cumple la condición, las casillas de posibles movimientos se pintan de verde
         break; //Terminar el caso del switch actual y continuar con el siguiente
             case "Peon Blanco": //Si se selecciona Peon Blanco en el Combo Box hacer
-        for(int i=0;i<8;i++){ //iterar en las filas del ajedrez del 0 al 7
-            for(int j=0;j<8;j++){ //iterar en las columnas del ajedrez del 0 al 7
-                
-                if((j==columna-1)&&((i==fila-2)||(i==fila-1))){ //sumar hacia adelante 1 casilla en la matriz
-                    jButtonMatrix[i][j].setBackground(Color.GREEN); //si se cumple la condición, las casillas de posibles movimientos se pintan de verde
+                for(int i=0;i<8;i++){
+                    for(int j=0;j<8;j++){
+                        if(fila==7){
+                            if((j==columna-1)&&(i==filaMatriz-1||i==filaMatriz-2)){
+                                jButtonMatrix[i][j].setBackground(Color.GREEN);
+                            }
+                        }else{
+                            if((j==columna-1)&&(i==filaMatriz-1)){
+                                jButtonMatrix[i][j].setBackground(Color.GREEN);
+                            }
+                        }
+                    }
                 }
-            }
-        }
-        break; //Terminar el caso del switch actual y continuar con el siguiente
+                break; //Terminar el caso del switch actual y continuar con el siguiente
         case "Peon Negro": //Si se selecciona Peon Negro en el Combo Box hacer
         for(int i=0;i<8;i++){ //iterar en las filas del ajedrez del 0 al 7
             for(int j=0;j<8;j++){ //iterar en las columnas del ajedrez del 0 al 7
-                if ((j==columnaMatriz)&&((i==filaMatriz+1)||(i==filaMatriz+1))){ //sumar hacia atras una casilla en la matriz
-                    jButtonMatrix[i][j].setBackground(Color.GREEN); //si se cumple la condición, las casillas de posibles movimientos se pintan de verde
+                if((j==columnaMatriz)&&((i==filaMatriz+1))){
+                    jButtonMatrix[i][j].setBackground(Color.GREEN);
+                }
+                if((j==columnaMatriz)&&((i==filaMatriz+2))&&(filaMatriz==1)){
+                    jButtonMatrix[i][j].setBackground(Color.GREEN);
                 }
             }
         }
